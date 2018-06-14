@@ -5,6 +5,7 @@ import Select from '@/components/select'
 import Animal from '@/components/animal'
 import Cart from '@/components/cart'
 import Pick from '@/components/pick'
+import Order from '@/components/order'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/pick',
       name: 'Pick',
       component: Pick
+    },
+    {
+      path: '/order',
+      name: 'Order',
+      component: Order
     }
   ]
 })

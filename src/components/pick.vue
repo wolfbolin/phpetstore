@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading="loading">
     <h2>快来清空你的购物车吧</h2>
     <el-table
       :data="cartlist" border>
@@ -31,7 +31,7 @@
       <el-button type="danger" size="small" v-on:click="to_back">后退</el-button>
       <div class="wb-fr">
         <p class="money">总金额：￥{{ auto_sum }}</p>
-        <el-button type="success" size="small">支付</el-button>
+        <el-button type="success" size="small" @click="pay">支付</el-button>
       </div>
     </el-card>
   </div>
@@ -39,17 +39,72 @@
 
 <script>
   import _global_ from "../Global";
-
   export default {
     name: "pick",
     data() {
       return {
-        cartlist: _global_.cartlist
+        cartlist: _global_.cartlist,
+        loading:false
       }
     },
     methods:{
       to_back(){
         this.$router.back(-1);
+      },
+      pay(){
+        this.loading = true;
+        let that  = this;
+        this.$message({
+          type: 'success',
+          message: '正在确认您的订单'
+        });
+
+        let pick_data = [];
+        for(let item in this.cartlist){
+          let it = {
+            title: this.cartlist[item].title,
+            price: this.cartlist[item].price,
+            num: this.cartlist[item].num
+          };
+          //let it = this.cartlist[item].title;
+          pick_data.push(JSON.stringify(it))
+        }
+
+        this.$http.post(
+          'http://127.0.0.1:5000/api/pick_pet', {
+            uid: _global_.user_uid,
+            list:pick_data
+          }, {
+            emulateJSON: true
+          }).then(function (res) {
+          if (res.body.result === 'success') {
+            let that = this;
+            setTimeout(function (){
+              that.$message({
+                message: 'Pick成功，宠物会很快送到您的家中',
+                type: 'success'
+              });
+              that.loading = false;
+            }, 2000);
+          } else {
+            let that = this;
+            setTimeout(function (){
+              that.$message({
+                message: 'Pick失败，请你是不是哪里出错了',
+                type: 'warning'
+              });
+              that.loading = false;
+            }, 2000);
+
+          }
+        }, function (res) {
+          this.$message({
+            message: '网络连接异常，请稍后重试',
+            type: 'warning'
+          });
+          this.loading = false;
+          console.log('fail' + status + "," + request);
+        });
       }
     },
     computed: {

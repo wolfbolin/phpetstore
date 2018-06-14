@@ -1,10 +1,12 @@
 <script>
-  let mystatus = 123;
+  let user_status = false;
+  let user_uid = -1;
   let cartlist = [];
 
   export default {
-    mystatus,
-    cartlist
+    user_status,
+    cartlist,
+    user_uid
   }
 </script>
 

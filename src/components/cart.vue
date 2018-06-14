@@ -37,9 +37,11 @@
         label="操作">
         <template slot-scope="scope">
           <el-button type="primary" size="small"
-                     v-on:click="to_animal(scope.row.pid)">查看</el-button>
+                     v-on:click="to_animal(scope.row.pid)">查看
+          </el-button>
           <el-button type="danger" size="small"
-                     v-on:click="del_pet(scope.row.pid)">删除</el-button>
+                     v-on:click="del_pet(scope.row.pid)">删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -49,7 +51,8 @@
       <div class="wb-fr">
         <p class="money">总金额：￥{{ auto_sum }}</p>
         <el-button type="success" size="small"
-                   v-on:click="to_pick">结算</el-button>
+                   v-on:click="to_pick">结算
+        </el-button>
       </div>
     </el-card>
   </div>
@@ -65,7 +68,7 @@
         cartlist: _global_.cartlist
       }
     },
-    mounted(){
+    mounted() {
       console.log(this.cartlist)
       for (let index in this.cartlist) {
         this.$refs.multipleTable.toggleRowSelection(
@@ -81,22 +84,22 @@
           }
         }
       },
-      pick_pet(picks){
+      pick_pet(picks) {
         for (let index in this.cartlist) {
           this.cartlist[index].pick = false
         }
-        for(let item in picks){
+        for (let item in picks) {
           picks[item].pick = true
         }
       },
-      del_pet(pid){
+      del_pet(pid) {
         this.$confirm('你确定不pick它了吗？是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           for (let index in this.cartlist) {
-            if(this.cartlist[index].pid === pid){
+            if (this.cartlist[index].pid === pid) {
               this.cartlist.splice(index, 1);
               break;
             }
@@ -112,11 +115,11 @@
           });
         });
       },
-      clear_all(){
+      clear_all() {
         this.cartlist = [];
         _global_.cartlist = this.cartlist;
       },
-      to_animal(pid){
+      to_animal(pid) {
         this.$router.push({
           name: 'Animal',
           query: {
@@ -124,10 +127,25 @@
           }
         })
       },
-      to_pick(){
-        this.$router.push({
-          name: 'Pick'
-        })
+      to_pick() {
+        if (_global_.user_status === true) {
+          if(this.cartlist.length > 0){
+            this.$router.push({
+              name: 'Pick'
+            })
+          }else{
+            this.$message({
+              message: '快Pick你心爱的宠物吧',
+              type: 'warning'
+            });
+          }
+
+        } else {
+          this.$message({
+            message: '请您先登录帐号',
+            type: 'warning'
+          });
+        }
       }
     },
     computed: {
@@ -145,20 +163,23 @@
 </script>
 
 <style scoped>
-  .money{
+  .money {
     color: red;
     font-size: 20px;
     display: inline;
     vertical-align: middle;
     margin-right: 30px;
   }
-  .wb-fr{
+
+  .wb-fr {
     float: right;
   }
-  .wb-fr div{
+
+  .wb-fr div {
     display: inline;
   }
-  .box-card{
+
+  .box-card {
     margin: 30px 0;
   }
 </style>
