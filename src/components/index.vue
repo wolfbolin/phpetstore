@@ -5,7 +5,7 @@
         <img class="wb-body-image" src="../assets/splash.gif"/>
       </el-col>
       <el-col :xs=24 :sm=10>
-        <h2>Welcome come to phpetstore</h2>
+        <h2>{{ $t("message.welcome") }}</h2>
         <el-card class="wb-body-list-box">
           <el-collapse accordion>
             <el-collapse-item v-for="item in goods_class">

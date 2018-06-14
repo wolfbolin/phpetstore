@@ -7,12 +7,12 @@
             <img src="./assets/logo-topbar.gif"/>
           </div>
         </el-col>
-        <el-col class="wb-head-bar" :span="8" :offset="8">
-          <router-link to="/"><i class="el-icon-goods"></i> 主页</router-link>
-          <router-link to="/cart"><i class="el-icon-goods"></i> 购物车</router-link>
-          <router-link to="/order"><i class="el-icon-goods"></i> 订单</router-link>
-          <router-link to=""><i class="el-icon-refresh" @click="login">{{ user_status?"注销":"登录" }}</i></router-link>
-          <a><i class="el-icon-refresh"></i> {{ language==='cn'?"English":"简体中文" }}</a>
+        <el-col class="wb-head-bar" :span="9" :offset="7">
+          <router-link to="/"><i class="el-icon-goods"></i> {{ $t("message.index") }}</router-link>
+          <router-link to="/cart"><i class="el-icon-goods"></i> {{ $t("message.cart") }}</router-link>
+          <router-link to="/order"><i class="el-icon-goods"></i> {{ $t("message.order") }}</router-link>
+          <router-link to=""><i class="el-icon-refresh" @click="login">{{ user_status?$t("message.sign_out"):$t("message.sign_in") }}</i></router-link>
+          <a><i class="el-icon-refresh" @click="change_language"></i> {{ language==='zh'?"English":"简体中文" }}</a>
         </el-col>
       </el-row>
     </div>
@@ -58,7 +58,7 @@
       return {
         dialogFormVisible: false,
         user_status: _global_.user_status,
-        language: 'cn',
+        language: this.$i18n.locale,
         loading: false,
         user_data: {
           username: '',
@@ -116,7 +116,16 @@
           console.log('fail' + status + "," + request);
         });
         this.loading = false;
+      },
+      change_language(){
+        if(this.$i18n.locale === 'zh'){
+          this.$i18n.locale = 'en'
+        }else{
+          this.$i18n.locale = 'zh'
+        }
+        this.language = this.$i18n.locale
       }
+
     }
   }
 </script>
