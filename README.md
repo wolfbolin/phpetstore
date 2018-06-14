@@ -1,6 +1,14 @@
 # phpetstore
 
 > A Vue.js project
+>
+> Work for CSU.This is a copy of jpetstore.
+>
+> I use php at first, but I look python for help at the end.
+>
+> PHP or Python is just a tools to handle the database and handle user's logic.
+>
+> Please turn to [phpetstore](https://github.com/wolfbolin/phpetstore-server) for more code.
 
 ## Build Setup
 
