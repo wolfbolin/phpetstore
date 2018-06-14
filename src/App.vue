@@ -9,14 +9,16 @@
         </el-col>
         <el-col class="wb-head-bar" :span="8" :offset="8">
           <router-link to="/"><i class="el-icon-goods"></i> 主页</router-link>
-          <router-link to="/animal"><i class="el-icon-goods"></i> 购物车</router-link>
+          <router-link to="/cart"><i class="el-icon-goods"></i> 购物车</router-link>
           <a><i class="el-icon-refresh"></i> {{ user_status?"注销":"登录" }}</a>
           <a><i class="el-icon-refresh"></i> {{ language==='cn'?"English":"简体中文" }}</a>
         </el-col>
       </el-row>
     </div>
 
-    <router-view/>
+    <div class="wb-body">
+      <router-view/>
+    </div>
 
     <div class="wb-foot">
       <el-row>
@@ -67,6 +69,13 @@
     color: sandybrown;
     vertical-align: middle;
   }
+
+  .wb-body{
+    max-width: 1200px;
+    margin: auto;
+  }
+
+
   .wb-foot{
     background-color: #888888;
     padding: 24px 0;
