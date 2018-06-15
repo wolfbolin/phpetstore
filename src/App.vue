@@ -11,8 +11,10 @@
           <router-link to="/"><i class="el-icon-goods"></i> {{ $t("message.index") }}</router-link>
           <router-link to="/cart"><i class="el-icon-goods"></i> {{ $t("message.cart") }}</router-link>
           <router-link to="/order"><i class="el-icon-goods"></i> {{ $t("message.order") }}</router-link>
-          <router-link to=""><i class="el-icon-refresh" @click="login">{{ user_status?$t("message.sign_out"):$t("message.sign_in") }}</i></router-link>
-          <a><i class="el-icon-refresh" @click="change_language"></i> {{ language==='zh'?"English":"简体中文" }}</a>
+          <router-link to=""><i class="el-icon-refresh" @click="login">
+            {{ user_status?$t("message.sign_out"):$t("message.sign_in") }}</i></router-link>
+          <router-link to=""><i class="el-icon-refresh" @click="change_language">
+            {{ language==='zh'?"English":"简体中文" }}</i></router-link>
         </el-col>
       </el-row>
     </div>
@@ -30,19 +32,19 @@
       </el-row>
     </div>
 
-    <el-dialog title="用户登录" :visible.sync="dialogFormVisible"
+    <el-dialog v-bind:title="$t('message.login_title')" :visible.sync="dialogFormVisible"
                v-loading="loading">
       <el-form :model="user_data">
-        <el-form-item label="用户名">
+        <el-form-item v-bind:label="$t('message.login_name')">
           <el-input v-model="user_data.username" type="text"></el-input>
         </el-form-item>
-        <el-form-item label="密码">
+        <el-form-item v-bind:label="$t('message.login_passwd')">
           <el-input v-model="user_data.password" type="password"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="to_login">确 定</el-button>
+        <el-button @click="dialogFormVisible = false">{{ $t("message.cancel") }}</el-button>
+        <el-button type="primary" @click="to_login">{{ $t("message.sure") }}</el-button>
       </div>
     </el-dialog>
 
@@ -59,6 +61,7 @@
         dialogFormVisible: false,
         user_status: _global_.user_status,
         language: this.$i18n.locale,
+        login_title: '',
         loading: false,
         user_data: {
           username: '',
@@ -117,10 +120,10 @@
         });
         this.loading = false;
       },
-      change_language(){
-        if(this.$i18n.locale === 'zh'){
+      change_language() {
+        if (this.$i18n.locale === 'zh') {
           this.$i18n.locale = 'en'
-        }else{
+        } else {
           this.$i18n.locale = 'zh'
         }
         this.language = this.$i18n.locale

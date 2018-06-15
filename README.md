@@ -8,7 +8,9 @@
 >
 > PHP or Python is just a tools to handle the database and handle user's logic.
 >
-> Please turn to [phpetstore](https://github.com/wolfbolin/phpetstore-server) for more code.
+> Please turn to [phpetstore-server](https://github.com/wolfbolin/phpetstore-server) for more code.
+>
+> This repo will stop update at 2018-06-20
 
 ## Build Setup
 
